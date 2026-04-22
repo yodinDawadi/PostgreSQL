@@ -48,4 +48,28 @@ const deleteNote = async (req,res)=>{
     }
 }
 
-module.exports = {getNotes,addNote,deleteNote}
+const editNote = async (req,res)=>{
+    try {
+        const { id } = req.params;
+        const { title,description } = req.body;
+        const note = await Note.update({
+            title,
+            description
+        },{
+            where: {id}
+        });
+        if (!note){
+            res.status(404).json({
+                message:"Note not found !!"
+            })}
+        
+        res.status(200).json({
+            message:"Note Updated !!",
+            data: note
+        })
+    } catch (error) {
+        
+    }
+}
+
+module.exports = {getNotes,addNote,deleteNote,editNote}
