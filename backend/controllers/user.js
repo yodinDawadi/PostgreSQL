@@ -8,7 +8,7 @@ const signup = async (req,res)=>{
             where: {email}
         });
         if(existingUser) {
-            res.status(400).json({
+          return  res.status(400).json({
                 message: 'Email Already Registered'
             })
         }
@@ -31,7 +31,8 @@ const signup = async (req,res)=>{
         
     } catch (error) {
         res.status(500).json({
-            message: 'Internal server error'
+            message: 'Internal server error',
+            error: error.message
         });
     }
 }
@@ -68,6 +69,7 @@ const login = async (req, res) => {
   } catch (error) {
     res.status(500).json({
       message: "Internal Server Error",
+      error: error.message
     });
   }
 };
