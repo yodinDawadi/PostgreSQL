@@ -21,7 +21,7 @@ app.use('/user',userRoutes);
 
 
 //starting point of the server
-sequelize.sync() //Database Synchronization
+sequelize.sync({ force: true }) //Database Synchronization
 .then(()=>{
     app.listen(PORT, ()=>{
     console.log('Server is running on port:',PORT);

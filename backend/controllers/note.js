@@ -2,8 +2,10 @@ const Note = require('../models/note');
 
 
 const getNotes = async (req,res)=>{
-    const notes = await Note.findAll();
-    res.status(201).json({
+    const notes = await Note.findAll({
+        where:{uid: req.user.uid}
+    });
+    res.status(200).json({
         message:"All notes are:",
         data: notes
     })
@@ -14,7 +16,8 @@ const addNote = async (req,res)=>{
         const {title,description}= req.body;
     const note = await Note.create({
         title,
-        description
+        description,
+        uid: req.user.uid
     });
 
     res.status(201).json({
@@ -34,7 +37,7 @@ const deleteNote = async (req,res)=>{
     try {
         const { id } = req.params;
         const note =await Note.destroy({
-            where: { id }
+            where: { id, uid:req.user.uid }
         });
         if (!note) {
             res.status(404).json({
@@ -56,7 +59,7 @@ const editNote = async (req,res)=>{
             title,
             description
         },{
-            where: {id}
+            where: {id, uid: req.user.uid}
         });
         if (!note){
             res.status(404).json({
