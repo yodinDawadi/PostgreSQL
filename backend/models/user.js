@@ -27,9 +27,6 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     unique: false,
     allowNull: false,
-    validate: {
-        len: [6,16],
-    }
   }
 });
 
